@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Button Click Game</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		button {
+			font-size: 24px;
+			padding: 10px 20px;
+		}
+	</style>
+	<script type="text/javascript">
+		var score = 0;
+		var timeLeft = 10;
+		var timer;
+		var highScore = 0;
+
+		function startGame() {
+			score = 0;
+			timeLeft = 10;
+			updateScore();
+			updateTimeLeft();
+			document.getElementById("start-btn").disabled = true;
+			document.getElementById("game-btn").disabled = false;
+			timer = setInterval(function() {
+				timeLeft--;
+				updateTimeLeft();
+				if (timeLeft === 0) {
+					endGame();
+				}
+			}, 1000);
+		}
+
+		function endGame() {
+			clearInterval(timer);
+			document.getElementById("start-btn").disabled = false;
+			document.getElementById("game-btn").disabled = true;
+			if (score > highScore) {
+				highScore = score;
+				alert("New High Score! Your score is " + score + ".");
+			} else {
+				alert("Time's up! Your score is " + score + ".");
+			}
+			updateHighScore();
+		}
+
+		function updateScore() {
+			document.getElementById("score").innerHTML = "Score: " + score;
+		}
+
+		function updateTimeLeft() {
+			document.getElementById("time-left").innerHTML = "Time left: " + timeLeft + " seconds";
+		}
+
+		function incrementScore() {
+			score++;
+			updateScore();
+		}
+
+		function updateHighScore() {
+			document.getElementById("high-score").innerHTML = "High Score: " + highScore;
+		}
+	</script>
+</head>
+<body>
+	<h1>Mukul's Button Click Game</h1>
+	<p><button id="start-btn" onclick="startGame()">Start Game</button></p>
+	<p><button id="game-btn" onclick="incrementScore()" disabled>Click Me!</button></p>
+	<p id="score">Score: 0</p>
+	<p id="time-left">Time left: 10 seconds</p>
+	<p id="high-score">High Score: 0</p>
+</body>
+</html>
